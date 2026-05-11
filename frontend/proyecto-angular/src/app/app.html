@@ -1,0 +1,180 @@
+<div class="main-card">
+
+  <!-- ICONO SUPERIOR -->
+  <div class="top-icon">
+    <img
+      src="icons/signal.png"
+      alt="Signal"
+      class="top-image-icon">
+  </div>
+
+  <!-- TITULO -->
+  <h1>Live Database Events</h1>
+
+  <p class="subtitle">
+    Monitoreo en tiempo real de eventos generados desde PostgreSQL hacia Angular
+  </p>
+
+  <div class="title-line"></div>
+
+  <!-- EVENTO -->
+  @if (currentNotification()) {
+
+    <div class="event-container">
+
+      <h3>Último evento detectado</h3>
+
+      <p>
+        <strong>Tabla:</strong>
+        {{ currentNotification().table }}
+      </p>
+
+      <p>
+        <strong>Campo:</strong>
+        {{ currentNotification().field_modified }}
+      </p>
+
+      <p>
+        <strong>Valor anterior:</strong>
+        {{ currentNotification().previous_name }}
+      </p>
+
+      <p>
+        <strong>Valor nuevo:</strong>
+        {{ currentNotification().updated_name }}
+      </p>
+
+      <p class="timestamp">
+        <strong>Fecha y hora:</strong>
+        {{ currentNotification().event_time }}
+      </p>
+
+    </div>
+
+  } @else {
+
+    <!-- ESPERANDO EVENTOS -->
+    <div class="event-container waiting-card">
+
+      <div class="waiting-left">
+
+        <div class="waiting-icon-box">
+          <img
+            src="icons/clock.png"
+            alt="Clock"
+            class="waiting-image">
+        </div>
+
+        <div>
+          <h3>Esperando eventos...</h3>
+
+          <p class="waiting-text">
+            Realiza un UPDATE en PostgreSQL para visualizar el cambio en tiempo real.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+  <!-- REGISTROS -->
+  <div class="records-header">
+
+    <h3 class="section-title">
+      <img
+        src="icons/database.png"
+        alt="Database"
+        class="section-db-icon">
+      Registros monitoreados en tiempo real
+    </h3>
+
+    <div class="counter">
+      <span class="status-dot"></span>
+      <span class="counter-label">
+        Total de registros:
+      </span>
+      <span class="counter-number">
+        {{ friendsList().length }}
+      </span>
+    </div>
+
+  </div>
+
+  <!-- TABLA -->
+  <table
+    mat-table
+    [dataSource]="friendsList()"
+    class="mat-elevation-z8 material-table">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>
+        <span class="header-content">
+          <span class="header-symbol">◈</span> ID
+        </span>
+      </th>
+
+      <td mat-cell *matCellDef="let friend">
+        <span class="id-badge">{{ friend.id }}</span>
+      </td>
+    </ng-container>
+
+    <!-- NOMBRE -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        <span class="header-content">
+          <span class="header-symbol">👤</span> Nombre
+        </span>
+      </th>
+
+      <td mat-cell *matCellDef="let friend">
+        <div class="name-cell">
+          <span class="initial-badge">{{ friend.name.charAt(0).toUpperCase() }}</span>
+          <span class="friend-name">{{ friend.name }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- GENERO -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>
+        <span class="header-content">
+          <span class="header-symbol">♂</span> Género
+        </span>
+      </th>
+
+      <td mat-cell *matCellDef="let friend">
+        <span
+          class="gender-badge"
+          [class.male]="friend.gender === 'Masculino'"
+          [class.female]="friend.gender === 'Femenino'">
+          @if (friend.gender === 'Masculino') {
+            <span class="gender-symbol">♂</span>
+          } @else {
+            <span class="gender-symbol">♀</span>
+          }
+          {{ friend.gender }}
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'gender']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'gender'];"></tr>
+
+  </table>
+
+  <!-- CONEXIÓN ACTIVA -->
+  <div class="connection-status">
+    <div class="connection-icon">
+      <img src="icons/connection.png" alt="Active">
+    </div>
+
+    <div class="connection-text">
+      <h4>Conexión activa con PostgreSQL</h4>
+      <p>Actualizaciones en tiempo real</p>
+    </div>
+  </div>
+
+</div>
