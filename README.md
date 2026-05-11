@@ -4,6 +4,7 @@ Este proyecto consiste en un sistema web que permite monitorear y reflejar en ti
 
 <img width="1365" height="678" alt="image" src="https://github.com/user-attachments/assets/95f33548-d249-4585-ac9f-5676b30b037c" />
 
+
 <img width="1365" height="677" alt="image" src="https://github.com/user-attachments/assets/4d037954-c618-410a-bf73-904146fd0453" />
 
 ---
